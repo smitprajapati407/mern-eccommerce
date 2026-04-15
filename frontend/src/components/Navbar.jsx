@@ -1,13 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("cart");
     setUser(null);
     navigate("/login");
+  };
+
+  const handleSearch = () => {
+    if (search.trim()) {
+      navigate(`/search/${search}`);
+    }
   };
 
   return (
@@ -24,12 +32,28 @@ const Navbar = ({ user, setUser }) => {
         </span>
       </h1>
 
-      {/* 🔗 LINKS */}
-      <div className="flex items-center space-x-6 text-sm md:text-base">
+      {/* 🔗 LINKS + SEARCH */}
+      <div className="flex items-center space-x-5 text-sm md:text-base">
 
-        <Link to="/" className="hover:text-yellow-300 transition">
-          Home
-        </Link>
+        <Link
+  to="/"
+  className="text-lg font-bold text-yellow-300 hover:scale-110 transition transform"
+>
+  Home
+</Link>
+
+        {/* 🔍 SIMPLE SEARCH BAR (no rounded) */}
+        <div className="flex items-center border-b border-white px-1">
+          <span className="text-gray-200 mr-2">🔍</span>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="bg-transparent outline-none text-sm text-white w-32 placeholder-gray-300"
+          />
+        </div>
 
         {user && (
           <Link to="/cart" className="hover:text-yellow-300 transition">
@@ -62,7 +86,6 @@ const Navbar = ({ user, setUser }) => {
               Hello, {user?.user?.name || "User"}
             </span>
 
-            {/* 🔥 LOGOUT BUTTON */}
             <button
               onClick={logout}
               className="px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-red-500 to-orange-500 hover:scale-105 transition shadow-md"
