@@ -71,7 +71,7 @@ MERN-ECOMMERCE-MAIN/
  1️⃣ Clone Repository
 
 
-git clone https://github.com/smitprajapati407/mern-ecommerce
+git clone https://github.com/smitprajapati407/mern-ecommerce-main
 
 cd MERN-ECOMMERCE-MAIN
 
